@@ -1,0 +1,26 @@
+# ============================================================
+# 根目录 Netlify 配置 —— 本仓库是 monorepo，含两个独立站点：
+#   1) Hugo 哲学主站  → 由 .github/workflows/deploy-cos.yml 部署到腾讯云 COS
+#   2) AI 专家直连转译器 → 由 Netlify 部署（本文件将 base 指向 ai/ 子目录）
+#
+# 说明：netlify.toml 的配置优先于 Netlify UI 设置，
+#       部署时无需在 UI 修改 Base Directory / Build command。
+# ============================================================
+
+[build]
+  base = "ai"
+  command = ""
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+
+# 前端调用 /api/* 时转发到 Netlify Functions（/api/translate → /.netlify/functions/translate）
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
