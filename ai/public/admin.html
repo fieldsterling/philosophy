@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>思辨与信仰 · 内容后台</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+  <!-- 登录 -->
+  <div id="loginView" class="login-wrap">
+    <form id="loginForm" class="login-card">
+      <div class="login-title">内容后台</div>
+      <p class="login-sub">思辨与信仰 · 文章管理</p>
+      <input id="loginInput" type="password" class="login-input" placeholder="后台口令" autocomplete="current-password">
+      <button type="submit" id="loginBtn" class="login-btn">进入后台</button>
+      <p id="loginMsg" class="login-msg"></p>
+    </form>
+  </div>
+
+  <!-- 主界面 -->
+  <div id="mainView" class="main-wrap" hidden>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <span class="brand">思辨与信仰 · 内容后台</span>
+        <div class="topbar-actions">
+          <a class="link" href="/" target="_blank" rel="noopener">AI 对话 ↗</a>
+          <button id="logoutBtn" class="ghost-btn">退出</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 列表视图 -->
+    <section id="listView" class="view">
+      <div class="list-head">
+        <h1 class="view-title">文章</h1>
+        <div class="list-actions">
+          <button id="refreshBtn" class="ghost-btn">刷新</button>
+          <button id="newBtn" class="primary-btn">＋ 新建文章</button>
+        </div>
+      </div>
+      <div id="postList" class="post-list"></div>
+    </section>
+
+    <!-- 编辑器视图 -->
+    <section id="editorView" class="view" hidden>
+      <div class="editor-head">
+        <div class="editor-meta">
+          <input id="edTitle" class="ed-title-input" placeholder="文章标题" disabled>
+          <span id="edPath" class="ed-path"></span>
+          <div id="newFields" class="new-fields" hidden>
+            <div class="field-row">
+              <input id="nfCategory" class="field-input" placeholder="分类目录（小写英文，如 philosophy / religion）">
+              <input id="nfSlug" class="field-input" placeholder="文件名 slug（可选，默认由标题生成）">
+            </div>
+            <div class="field-row">
+              <input id="nfCategories" class="field-input" placeholder="显示分类（逗号分隔，如 哲学, 宗教）">
+              <input id="nfTags" class="field-input" placeholder="标签（逗号分隔）">
+            </div>
+            <div class="field-row">
+              <input id="nfSeries" class="field-input" placeholder="所属系列（可选）">
+              <input id="nfSummary" class="field-input" placeholder="摘要（可选）">
+            </div>
+          </div>
+        </div>
+        <div class="editor-actions">
+          <label class="draft-toggle">
+            <input id="edDraft" type="checkbox">
+            <span id="draftLabel">发布中</span>
+          </label>
+          <button id="backBtn" class="ghost-btn">返回列表</button>
+          <button id="saveBtn" class="primary-btn">保存</button>
+        </div>
+      </div>
+      <textarea id="edContent" class="ed-content" spellcheck="false" placeholder="在此编辑 Markdown 全文（含 front matter）…"></textarea>
+      <p class="ed-hint">提示：front matter 中 <code>draft: true</code> 表示草稿，构建时不会上线；顶部开关可一键切换发布状态。</p>
+    </section>
+  </div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

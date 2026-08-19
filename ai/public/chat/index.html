@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 思辨 · 专家直连</title>
+  <meta name="description" content="输入你的问题，系统转译为专家直连提示词，返回专家级回答。">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- 私人入口锁屏 -->
+  <div id="lock" class="lock-overlay">
+    <div class="lock-card">
+      <div class="lock-title">AI 思辨 · 私人入口</div>
+      <p class="lock-sub">此页面仅限授权使用，请输入访问口令</p>
+      <input id="lockInput" type="password" class="lock-input" placeholder="访问口令" autocomplete="off">
+      <button id="lockBtn" class="lock-btn">进入</button>
+      <p id="lockMsg" class="lock-msg"></p>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-title">AI 思辨</span>
+        <span class="brand-sub">专家直连 · 自主思考</span>
+      </div>
+      <a href="/" class="back-link">← 返回入口</a>
+    </div>
+  </header>
+
+  <main class="chat-main">
+    <div id="chat" class="chat">
+      <!-- 空状态欢迎语 -->
+      <div id="welcome" class="welcome">
+        <h1 class="welcome-title">向专家提问，而不是向聊天机器人提问</h1>
+        <p class="welcome-sub">你的每一个问题，都会被转译为高密度的「专家直连提示词」，再交给大模型给出硬核回答。</p>
+        <div class="example-chips">
+          <button class="example-chip" data-q="如何理解海德格尔所说的『向死而在』？">如何理解海德格尔的「向死而在」？</button>
+          <button class="example-chip" data-q="用第一性原理分析，为什么人会感到虚无？">用第一性原理分析，人为何感到虚无？</button>
+          <button class="example-chip" data-q="比较道家之『无为』与禅宗之『无念』的异同">比较道家「无为」与禅宗「无念」</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="input-bar">
+      <div class="toolbar">
+        <label class="tool">
+          <span class="tool-label">模式</span>
+          <select id="mode" class="tool-select">
+            <option value="full">转译并回答</option>
+            <option value="translate-only">仅转译提示词 B</option>
+          </select>
+        </label>
+        <label class="tool">
+          <span class="tool-label">模型</span>
+          <select id="model" class="tool-select">
+            <option value="deepseek-v4-pro">v4-pro · 质量优先</option>
+            <option value="deepseek-v4-flash">v4-flash · 速度优先</option>
+          </select>
+        </label>
+        <label class="tool">
+          <span class="tool-label">转译器</span>
+          <select id="translator" class="tool-select">
+            <option value="general">通用思辨</option>
+          </select>
+        </label>
+        <button id="manageBtn" class="tool-btn" title="上传 / 管理转译器">管理</button>
+        <button id="saveBtn" class="tool-btn" title="把当前对话保存到云端">保存对话</button>
+        <button id="newBtn" class="tool-btn" title="保存当前对话并开始新会话">新对话</button>
+      </div>
+      <div class="input-inner">
+        <textarea id="input" rows="1" placeholder="写下你的问题，回车发送，Shift+回车换行…"></textarea>
+        <button id="send" class="send-btn" title="发送">发送</button>
+      </div>
+      <p id="hint" class="input-hint">内容由 AI 生成，仅供参考 · 每轮均经专家转译</p>
+    </footer>
+  </main>
+
+  <!-- 转译器管理面板 -->
+  <div id="translatorPanel" class="translator-panel" hidden>
+    <div class="panel-header">
+      <span class="panel-title">转译器管理</span>
+      <button id="panelClose" class="tool-btn">关闭</button>
+    </div>
+    <label class="panel-label" for="tName">名称</label>
+    <input id="tName" class="lock-input" placeholder="如：古文解析 / 佛学禅修">
+    <label class="panel-label" for="tPrompt">提示词内容（可粘贴 translatorPrompt.js 中反引号 ` 内的文本，或直接选择 .js 文件）</label>
+    <textarea id="tPrompt" class="t-prompt" rows="10" placeholder="粘贴转译器提示词内容…"></textarea>
+    <div class="panel-actions">
+      <button id="tFile" class="tool-btn">选择 .js 文件</button>
+      <button id="tSave" class="tool-btn primary">保存转译器</button>
+    </div>
+    <div id="tList" class="t-list"></div>
+  </div>
+
+  <input id="tFileInput" type="file" accept=".js,.txt" hidden>
+
+  <script src="/app.js"></script>
+</body>
+</html>

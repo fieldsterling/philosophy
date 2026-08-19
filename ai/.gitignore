@@ -1,0 +1,5 @@
+# Local Netlify folder
+.netlify
+
+# 本地服务日志
+netlify-dev.log

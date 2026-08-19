@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://zhaowo.jia.gold/philosophy/sitemap.xml

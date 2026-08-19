@@ -3,45 +3,242 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI 思辨 · 专家直连</title>
-  <meta name="description" content="输入你的问题，系统转译为专家直连提示词，返回专家级回答。">
+  <title>思辨与信仰</title>
+  <meta name="description" content="思辨与信仰 — 哲学与宗教见解阐释">
+  <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf8f5;
+      --bg-card: rgba(255, 255, 255, 0.6);
+      --text: #2c2c2c;
+      --text-secondary: #6b6b6b;
+      --text-muted: #9a948a;
+      --border: rgba(0, 0, 0, 0.08);
+      --accent: #8b7355;
+      --accent-light: rgba(139, 115, 85, 0.1);
+      --gold: #b8944c;
+      --gold-light: rgba(184, 148, 76, 0.18);
+      --font-serif: "Noto Serif SC", "Source Han Serif SC", "STSong", "Songti SC", "SimSun", serif;
+      --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    }
+
+    html { font-size: 17px; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      padding: 2rem 1.25rem;
+    }
+
+    .portal {
+      width: 100%;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    /* ---------- 品牌 ---------- */
+    .brand {
+      text-align: center;
+    }
+
+    .brand-mark {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 1.1rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .brand-mark svg {
+      width: 26px;
+      height: 26px;
+      color: var(--gold);
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-indent: 0.18em;
+      line-height: 1.4;
+    }
+
+    .brand-sub {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.35em;
+      text-indent: 0.35em;
+    }
+
+    /* ---------- 卡片 ---------- */
+    .cards {
+      width: 100%;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .card {
+      flex: 1;
+      max-width: 320px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      text-decoration: none;
+      color: var(--text);
+      background: var(--bg-card);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 2.2rem 1.5rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      box-shadow: 0 18px 46px rgba(184, 148, 76, 0.12);
+    }
+
+    .card:active {
+      transform: translateY(-1px);
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-light);
+      border: 1px solid var(--gold-light);
+      transition: background 0.25s ease;
+    }
+
+    .card-icon svg {
+      width: 26px;
+      height: 26px;
+      color: var(--gold);
+    }
+
+    .card:hover .card-icon {
+      background: var(--gold-light);
+    }
+
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-indent: 0.2em;
+    }
+
+    .card-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+    }
+
+    .card-lock {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 0.15rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .card-lock svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* ---------- 页脚 ---------- */
+    .portal-footer {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 600px) {
+      .portal { gap: 2.2rem; }
+      .cards { flex-direction: column; align-items: center; }
+      .card { width: 100%; max-width: 340px; min-height: 190px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="brand">
-        <span class="brand-title">AI 思辨</span>
-        <span class="brand-sub">专家直连 · 自主思考</span>
+  <div class="portal">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7.5 3v6c0 4.4-3 7.9-7.5 9-4.5-1.1-7.5-4.6-7.5-9V6L12 3z"/>
+          <path d="M12 3v18"/>
+        </svg>
       </div>
-      <a href="https://zhaowo.jia.gold/philosophy/" class="back-link">← 返回主站</a>
-    </div>
-  </header>
-
-  <main class="chat-main">
-    <div id="chat" class="chat">
-      <!-- 空状态欢迎语 -->
-      <div id="welcome" class="welcome">
-        <h1 class="welcome-title">向专家提问，而不是向聊天机器人提问</h1>
-        <p class="welcome-sub">你的每一个问题，都会被转译为高密度的「专家直连提示词」，再交给大模型给出硬核回答。</p>
-        <div class="example-chips">
-          <button class="example-chip" data-q="如何理解海德格尔所说的『向死而在』？">如何理解海德格尔的「向死而在」？</button>
-          <button class="example-chip" data-q="用第一性原理分析，为什么人会感到虚无？">用第一性原理分析，人为何感到虚无？</button>
-          <button class="example-chip" data-q="比较道家之『无为』与禅宗之『无念』的异同">比较道家「无为」与禅宗「无念」</button>
-        </div>
-      </div>
+      <h1 class="brand-title">思辨与信仰</h1>
+      <p class="brand-sub">星空下的法师</p>
     </div>
 
-    <footer class="input-bar">
-      <div class="input-inner">
-        <textarea id="input" rows="1" placeholder="写下你的问题，回车发送，Shift+回车换行…"></textarea>
-        <button id="send" class="send-btn" title="发送">发送</button>
-      </div>
-      <p class="input-hint">内容由 AI 生成，仅供参考 · 每轮均经专家转译</p>
-    </footer>
-  </main>
+    <nav class="cards">
+      <a class="card" href="/philosophy/">
+        <span class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v16H6.5A2.5 2.5 0 0 0 4 21.5v-16z"/>
+            <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v16h5.5a2.5 2.5 0 0 1 2.5 2.5v-16z"/>
+          </svg>
+        </span>
+        <span class="card-title">阅读</span>
+        <span class="card-note">思辨与修炼</span>
+      </a>
 
-  <script src="/app.js"></script>
+      <a class="card" href="/chat/">
+        <span class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1.1L3 20l1.1-5.4A8.5 8.5 0 1 1 21 11.5z"/>
+          </svg>
+        </span>
+        <span class="card-title">对话</span>
+        <span class="card-note">暂未面向读者</span>
+        <span class="card-lock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="11" width="16" height="10" rx="2"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+          </svg>
+          凭口令进入
+        </span>
+      </a>
+    </nav>
+
+    <p class="portal-footer">© 2026 星空下的法师</p>
+  </div>
 </body>
 </html>

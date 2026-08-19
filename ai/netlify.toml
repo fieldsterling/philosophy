@@ -1,0 +1,43 @@
+# AI 专家直连转译器 —— Netlify 配置
+# 本地 netlify dev 直接使用本文件；CI 部署时由根 netlify.toml(base="ai") 合并读取本配置
+
+[build]
+  command = ""
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+
+# 前端调用 /api/* 时转发到 Netlify Functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# ── .com 域名下代理 Hugo 主站（保持地址栏 .com）─────────────────
+# 访问 https://你的.com/philosophy/* 时，Netlify 服务端把请求转发到
+# COS/CDN 上的主站，再把内容原样返回；浏览器地址栏始终是 .com，不跳走。
+[[redirects]]
+  from = "/philosophy/*"
+  to = "https://zhaowo.jia.gold/philosophy/:splat"
+  status = 200
+  force = true
+
+# 不带结尾斜杠的 /philosophy 也代理到主站首页
+[[redirects]]
+  from = "/philosophy"
+  to = "https://zhaowo.jia.gold/philosophy/"
+  status = 200
+  force = true
+
+# 本地开发：显式指定 dev 命令（可绕过框架自动检测，避免误把根目录 Hugo 站当 dev server）
+# netlify dev 在 8888 端口统一入口：/api/* → Functions，其余 → 本静态服务器(8088)
+[dev]
+  command = "node scripts/dev-server.mjs"
+  targetPort = 8088
+  autoLaunch = false
+  port = 8888

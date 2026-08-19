@@ -2,6 +2,8 @@
 {{ with .Site.Params.giscus }}
 {{ if .repoId }}
 <div class="giscus-wrapper">
+  <div class="comment-heading">评论</div>
+  <div class="comment-loading">评论区加载中…</div>
   <script src="https://giscus.app/client.js"
           data-repo="{{ .repo }}"
           data-repo-id="{{ .repoId }}"
@@ -18,6 +20,25 @@
           async>
   </script>
 </div>
+<script>
+(function () {
+  var wrap = document.querySelector('.giscus-wrapper');
+  if (!wrap) return;
+  var loading = wrap.querySelector('.comment-loading');
+  var done = false;
+  var timer = setTimeout(function () {
+    if (done) return;
+    if (loading) loading.innerHTML = '评论区加载失败，请刷新重试；或到 <a href="https://github.com/{{ .repo }}/discussions" target="_blank" rel="noopener">GitHub Discussions</a> 参与讨论。';
+  }, 10000);
+  window.addEventListener('message', function (e) {
+    if (e.origin === 'https://giscus.app' && e.data && e.data.giscus) {
+      done = true;
+      clearTimeout(timer);
+      if (loading) loading.remove();
+    }
+  });
+})();
+</script>
 {{ end }}
 {{ end }}
 {{ end }}

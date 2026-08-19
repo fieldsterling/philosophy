@@ -3,6 +3,7 @@
 # ============================================================
 baseURL = "https://zhaowo.jia.gold/philosophy/"
 locale = "zh-CN"
+timeZone = "Asia/Shanghai"
 title = "思辨与信仰"
 enableEmoji = true
 summaryLength = 120
@@ -12,6 +13,12 @@ enableGitInfo = false
 # 分页
 paginate = 10
 paginatePath = "page"
+
+# 站点地图（面向百度/搜索引擎）
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
 
 # 永久链接
 [permalinks]
@@ -27,14 +34,24 @@ paginatePath = "page"
 [params]
   description = "哲学与宗教见解阐释"
   author = "思辨与信仰"
-  # AI 对话模块地址（Netlify 部署，部署后替换为真实地址；本地测试用 http://localhost:8888/）
-  aiUrl = "https://your-ai-app.netlify.app/"
+  # AI 对话模块地址（Netlify 部署）
+  aiUrl = "https://astrumage.com/"
+  # 文章阅读/点赞统计接口（Netlify 的 /api/stats；本地留空则走相对路径）
+  statsApi = "https://astrumage.com"
+  # 面向百度的 SEO 配置
+  [params.seo]
+    # 百度搜索资源平台（ziyuan.baidu.com）站点验证码：验证后把 token 填到这里
+    baiduVerification = ""
+    # 默认分享图（放到 static/images/ 下，如 images/og-default.png；留空则用文章题图）
+    defaultOgImage = ""
+    # 首页 keywords
+    keywords = ["思辨与信仰", "哲学", "宗教", "神学", "存在主义", "蒂利希"]
   # Giscus 评论配置（在 giscus.app 配置后填入）
   [params.giscus]
-    repo = "your-github-name/philosophia"
-    repoId = ""
+    repo = "fieldsterling/philosophy"
+    repoId = "1339456535"
     category = "Announcements"
-    categoryId = ""
+    categoryId = "DIC_kwDOT9Z8F84DDvgy"
     mapping = "pathname"
     theme = "light"
     lang = "zh-CN"

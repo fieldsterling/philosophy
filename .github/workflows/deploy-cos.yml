@@ -32,3 +32,12 @@ jobs:
           secret_key: ${{ secrets.COS_SECRET_KEY }}
           bucket: ${{ secrets.COS_BUCKET }}
           region: ${{ secrets.COS_REGION }}
+
+      - name: Purge EdgeOne cache
+        if: ${{ secrets.EDGEONE_ZONE_ID != '' }}
+        uses: 2061360308/edgeone-purge-action@v1
+        with:
+          secret_id: ${{ secrets.COS_SECRET_ID }}
+          secret_key: ${{ secrets.COS_SECRET_KEY }}
+          zone_id: ${{ secrets.EDGEONE_ZONE_ID }}
+          hostnames: zhaowo.jia.gold

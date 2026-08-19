@@ -402,8 +402,51 @@ img {
 
 .article-stats {
   display: flex;
-  gap: 1.25rem;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border-light);
+  border-radius: 18px;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.action-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  opacity: 1;
+}
+.action-btn .stat-icon {
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+.like-btn.is-liked {
+  border-color: rgba(214, 90, 90, 0.4);
+  color: #d65a5a;
+  background: rgba(214, 90, 90, 0.06);
+}
+.like-btn.is-liked .stat-icon {
+  fill: currentColor;
+  opacity: 1;
+}
+
+.share-btn.is-copied {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
 }
 
 .article-tags {
@@ -642,6 +685,27 @@ img {
   margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid var(--border);
+}
+
+.comment-heading {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.comment-loading {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding: 1.5rem 0;
+  text-align: center;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+}
+.comment-loading a {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-light);
 }
 
 /* ---------- List Page ---------- */

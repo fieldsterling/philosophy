@@ -6,6 +6,7 @@
 # Node / Netlify
 node_modules/
 .netlify/
+ai/.local/
 npm-debug.log*
 
 # 环境变量（密钥不入库，但保留模板）
@@ -16,3 +17,12 @@ npm-debug.log*
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# 本地开发备忘（禁止推送）
+dev.txt
+dev2.txt
+hugo-server.log
+netlify-dev.log
+
+# 一键发布暂存目录（文章从这进 content，本身不入库）
+publish/
