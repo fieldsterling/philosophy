@@ -1,0 +1,52 @@
+# ============================================================
+# 思辨与信仰 — Hugo 站点配置
+# ============================================================
+baseURL = "https://zhaowo.jia.gold/philosophy/"
+locale = "zh-CN"
+title = "思辨与信仰"
+enableEmoji = true
+summaryLength = 120
+hasCJKLanguage = true
+enableGitInfo = false
+
+# 分页
+paginate = 10
+paginatePath = "page"
+
+# 永久链接
+[permalinks]
+  posts = "/:year/:month/:slug/"
+
+# 分类法（灵活分类，由 front matter 驱动）
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+# 站点参数
+[params]
+  description = "哲学与宗教见解阐释"
+  author = "思辨与信仰"
+  # AI 对话模块地址（Netlify 部署，部署后替换为真实地址；本地测试用 http://localhost:8888/）
+  aiUrl = "https://your-ai-app.netlify.app/"
+  # Giscus 评论配置（在 giscus.app 配置后填入）
+  [params.giscus]
+    repo = "your-github-name/philosophia"
+    repoId = ""
+    category = "Announcements"
+    categoryId = ""
+    mapping = "pathname"
+    theme = "light"
+    lang = "zh-CN"
+    loading = "lazy"
+
+# 菜单 — 分类自动从内容生成，手动菜单仅放归档入口（首页由站点标题承担）
+[menu]
+  [[menu.main]]
+    name = "系列"
+    url = "series/"
+    weight = 2
+  [[menu.main]]
+    name = "标签"
+    url = "tags/"
+    weight = 3

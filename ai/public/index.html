@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 思辨 · 专家直连</title>
+  <meta name="description" content="输入你的问题，系统转译为专家直连提示词，返回专家级回答。">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-title">AI 思辨</span>
+        <span class="brand-sub">专家直连 · 自主思考</span>
+      </div>
+      <a href="https://blog.yourdomain.com/" class="back-link">← 返回主站</a>
+    </div>
+  </header>
+
+  <main class="chat-main">
+    <div id="chat" class="chat">
+      <!-- 空状态欢迎语 -->
+      <div id="welcome" class="welcome">
+        <h1 class="welcome-title">向专家提问，而不是向聊天机器人提问</h1>
+        <p class="welcome-sub">你的每一个问题，都会被转译为高密度的「专家直连提示词」，再交给大模型给出硬核回答。</p>
+        <div class="example-chips">
+          <button class="example-chip" data-q="如何理解海德格尔所说的『向死而在』？">如何理解海德格尔的「向死而在」？</button>
+          <button class="example-chip" data-q="用第一性原理分析，为什么人会感到虚无？">用第一性原理分析，人为何感到虚无？</button>
+          <button class="example-chip" data-q="比较道家之『无为』与禅宗之『无念』的异同">比较道家「无为」与禅宗「无念」</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="input-bar">
+      <div class="input-inner">
+        <textarea id="input" rows="1" placeholder="写下你的问题，回车发送，Shift+回车换行…"></textarea>
+        <button id="send" class="send-btn" title="发送">发送</button>
+      </div>
+      <p class="input-hint">内容由 AI 生成，仅供参考 · 每轮均经专家转译</p>
+    </footer>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

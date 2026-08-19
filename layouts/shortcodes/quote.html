@@ -1,0 +1,11 @@
+{{- $source := .Get "source" -}}
+{{- $translation := .Get "translation" -}}
+<figure class="quote-block">
+  <blockquote>{{ .Inner | markdownify }}</blockquote>
+  {{- with $translation }}
+  <figcaption class="translation">{{ . | markdownify }}</figcaption>
+  {{- end }}
+  {{- with $source }}
+  <footer class="source">—— {{ . }}</footer>
+  {{- end }}
+</figure>

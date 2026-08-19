@@ -1,0 +1,14 @@
+# Netlify 配置 — AI 专家直连转译器
+# 部署时在 Netlify 中将 Base Directory 设为 ai/
+
+[build]
+  command = ""
+  publish = "public"
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+
+[dev]
+  command = "netlify dev"
+  targetPort = 8888

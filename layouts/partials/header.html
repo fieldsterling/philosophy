@@ -1,0 +1,14 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ .Site.Home.RelPermalink }}" class="site-title">{{ .Site.Title }}</a>
+    <nav class="site-nav">
+      {{ range .Site.Menus.main }}
+      <a href="{{ .URL | relURL }}" class="nav-link">{{ .Name }}</a>
+      {{ end }}
+      {{ with .Site.Params.aiUrl }}
+      <a href="{{ . }}" class="nav-link ai-link" target="_blank" rel="noopener">AI 对话</a>
+      {{ end }}
+    </nav>
+  </div>
+  <div class="header-divider"></div>
+</header>

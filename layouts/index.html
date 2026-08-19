@@ -1,0 +1,44 @@
+{{ define "main" }}
+<div class="home-container">
+  <header class="home-header">
+    <h1 class="home-title">{{ .Site.Title }}</h1>
+    <p class="home-subtitle">{{ .Site.Params.description }}</p>
+  </header>
+
+  <!-- 分类筛选标签 -->
+  {{ $allCategories := slice }}
+  {{ range where .Site.RegularPages "Section" "posts" }}
+    {{ range .Params.categories }}
+      {{ $allCategories = $allCategories | append . }}
+    {{ end }}
+  {{ end }}
+  {{ $allCategories = $allCategories | uniq | sort }}
+  {{ if gt (len $allCategories) 0 }}
+  <div class="category-filter">
+    <a href="{{ .Site.Home.RelPermalink }}" class="filter-tag active">全部</a>
+    {{ range $allCategories }}
+    <a href="{{ relURL (printf "categories/%s/" (. | urlize)) }}" class="filter-tag">{{ . }}</a>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <div class="article-grid">
+    {{ $paginator := .Paginate (where .Site.RegularPages "Section" "posts") }}
+    {{ range $paginator.Pages }}
+      {{ partial "article-card.html" . }}
+    {{ end }}
+  </div>
+
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="pagination">
+    {{ if $paginator.HasPrev }}
+    <a href="{{ $paginator.Prev.URL }}" class="page-prev">&laquo; 上一页</a>
+    {{ end }}
+    <span class="page-info">第 {{ $paginator.PageNumber }} 页 / 共 {{ $paginator.TotalPages }} 页</span>
+    {{ if $paginator.HasNext }}
+    <a href="{{ $paginator.Next.URL }}" class="page-next">下一页 &raquo;</a>
+    {{ end }}
+  </nav>
+  {{ end }}
+</div>
+{{ end }}

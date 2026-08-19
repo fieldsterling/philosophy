@@ -1,0 +1,12 @@
+{
+  "name": "deepseek-expert-prompt-translator",
+  "version": "1.0.0",
+  "description": "专家直连提示词转译器 - AI 对话模块",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
