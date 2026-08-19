@@ -45,7 +45,7 @@ exports.handler = async (event) => {
   }
 
   const baseURL = process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com';
-  const model = process.env.DEEPSEEK_MODEL || 'deepseek-chat';
+  const model = process.env.DEEPSEEK_MODEL || 'deepseek-v4-pro';
 
   // 多轮追问时携带上文摘要，帮助转译器理解"追问什么"
   const userContent = context

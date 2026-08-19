@@ -49,7 +49,7 @@ exports.handler = async (event) => {
   }
 
   const baseURL = process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com';
-  const model = process.env.DEEPSEEK_MODEL || 'deepseek-chat';
+  const model = process.env.DEEPSEEK_MODEL || 'deepseek-v4-pro';
 
   try {
     const resp = await fetch(`${baseURL}/chat/completions`, {
