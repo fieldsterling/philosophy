@@ -36,10 +36,46 @@ jobs:
       - name: Purge EdgeOne cache
         env:
           EDGEONE_ZONE_ID: ${{ secrets.EDGEONE_ZONE_ID }}
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
         if: env.EDGEONE_ZONE_ID != ''
-        uses: 2061360308/edgeone-purge-action@v1
-        with:
-          secret_id: ${{ secrets.COS_SECRET_ID }}
-          secret_key: ${{ secrets.COS_SECRET_KEY }}
-          zone_id: ${{ secrets.EDGEONE_ZONE_ID }}
-          hostnames: zhaowo.jia.gold
+        run: |
+          python3 -c "
+import hashlib, hmac, json, urllib.request, time
+
+zone_id = '${{ secrets.EDGEONE_ZONE_ID }}'
+secret_id = '${{ secrets.COS_SECRET_ID }}'
+secret_key = '${{ secrets.COS_SECRET_KEY }}'
+service = 'teo'
+version = '2022-09-01'
+host = 'teo.tencentcloudapi.com'
+ts = str(int(time.time()))
+date = time.strftime('%Y-%m-%d', time.gmtime(int(ts)))
+
+payload = json.dumps({'ZoneId': zone_id, 'Type': 'purge_prefix', 'Targets': ['https://zhaowo.jia.gold/philosophy']}).encode()
+hashed = hashlib.sha256(payload).hexdigest()
+canonical = f'POST\n/\n\ncontent-type:application/json; charset=utf-8\nhost:{host}\n\ncontent-type;host\n{hashed}'
+scope = f'{date}/{service}/tc3_request'
+str_to_sign = f'TC3-HMAC-SHA256\n{ts}\n{scope}\n{hashlib.sha256(canonical.encode()).hexdigest()}'
+
+def hmac_sha256(key, msg):
+    return hmac.new(key, msg.encode(), hashlib.sha256).digest()
+
+secret_date = hmac_sha256('TC3' + secret_key, date)
+secret_service = hmac_sha256(secret_date, service)
+secret_signing = hmac_sha256(secret_service, 'tc3_request')
+signature = hmac_sha256(secret_signing, str_to_sign).hex()
+
+auth = f'TC3-HMAC-SHA256 Credential={secret_id}/{scope}, SignedHeaders=content-type;host, Signature={signature}'
+req = urllib.request.Request(f'https://{host}', data=payload, headers={
+    'Content-Type': 'application/json; charset=utf-8',
+    'Host': host,
+    'X-TC-Action': 'CreatePurgeTask',
+    'X-TC-Version': version,
+    'X-TC-Timestamp': ts,
+    'X-TC-Region': 'ap-guangzhou',
+    'Authorization': auth,
+})
+resp = urllib.request.urlopen(req)
+print('Purge result:', resp.read().decode())
+"
