@@ -19,20 +19,19 @@
   status = 200
 
 # ── .com 域名下代理 Hugo 主站（保持地址栏 .com）─────────────────
-# 访问 https://你的.com/philosophy/* 时，Netlify 服务端把请求转发到
-# COS/CDN 上的主站，再把内容原样返回；浏览器地址栏始终是 .com，不跳走。
-[[redirects]]
-  from = "/philosophy/*"
-  to = "https://zhaowo.jia.gold/philosophy/:splat"
-  status = 200
-  force = true
+# 注意：Hugo 内容只发布在 COS（经 EdgeOne），Netlify 仅做"透明转发"（Edge Function），
+#       并按文件类型设置缓存头（HTML: no-cache 用 ETag 验证 / 静态资源: 永久缓存）。
+#       部署后由 GitHub Actions 调 EdgeOne purge（invalidate）保证全球节点立即同步。
+# 为什么用 Edge Function 而不是 redirects 代理？
+#   Netlify 官方限制：[[headers]] 不作用于代理响应；只有 Edge Function
+#   才能给代理响应设置缓存头。
+[[edge_functions]]
+  path = "/philosophy"
+  function = "philosophy-proxy"
 
-# 不带结尾斜杠的 /philosophy 也代理到主站首页
-[[redirects]]
-  from = "/philosophy"
-  to = "https://zhaowo.jia.gold/philosophy/"
-  status = 200
-  force = true
+[[edge_functions]]
+  path = "/philosophy/*"
+  function = "philosophy-proxy"
 
 # 本地开发：显式指定 dev 命令（可绕过框架自动检测，避免误把根目录 Hugo 站当 dev server）
 # netlify dev 在 8888 端口统一入口：/api/* → Functions，其余 → 本静态服务器(8088)

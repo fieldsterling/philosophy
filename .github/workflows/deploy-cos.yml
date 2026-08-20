@@ -32,3 +32,14 @@ jobs:
           secret_key: ${{ secrets.COS_SECRET_KEY }}
           bucket: ${{ secrets.COS_BUCKET }}
           region: ${{ secrets.COS_REGION }}
+
+      # 上传后刷新 EdgeOne 缓存（目录刷新 + invalidate）：
+      # 让全球节点对 /philosophy 重新回源验证，COS 有更新立即生效，没更新则继续用缓存。
+      # secrets 通过 env 传入脚本，避免直接在命令里引用导致 GitHub 拦截。
+      - name: Purge EdgeOne cache
+        if: env.EDGEONE_ZONE_ID != ''
+        env:
+          COS_SECRET_ID: ${{ secrets.COS_SECRET_ID }}
+          COS_SECRET_KEY: ${{ secrets.COS_SECRET_KEY }}
+          EDGEONE_ZONE_ID: ${{ secrets.EDGEONE_ZONE_ID }}
+        run: python .github/scripts/purge-edgeone.py
